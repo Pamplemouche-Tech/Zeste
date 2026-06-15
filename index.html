@@ -1,1 +1,154 @@
 <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Moteur de Recherche</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        /* Conteneur principal */
+        .search-container {
+            text-align: center;
+            margin-top: 15vh;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #4285f4;
+            margin-bottom: 30px;
+        }
+
+        /* Barre de recherche */
+        .search-box {
+            display: flex;
+            background: #fff;
+            border: 1px solid #dfe1e5;
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+            border-radius: 24px;
+            padding: 10px 20px;
+            transition: 0.2s;
+        }
+
+        .search-box:hover {
+            box-shadow: 0 4px 12px rgba(32,33,36,0.3);
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-button {
+            background: none;
+            border: none;
+            color: #4285f4;
+            font-weight: bold;
+            cursor: pointer;
+            padding-left: 10px;
+        }
+
+        /* Zone des résultats */
+        .results-container {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 600px;
+            display: none; /* Caché par défaut */
+        }
+
+        .result-item {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .result-title {
+            font-size: 18px;
+            color: #1a0dab;
+            text-decoration: none;
+        }
+
+        .result-title:hover {
+            text-decoration: underline;
+        }
+
+        .result-url {
+            font-size: 12px;
+            color: #006621;
+            margin-top: 2px;
+        }
+
+        .result-snippet {
+            font-size: 14px;
+            color: #545454;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="search-container">
+        <h1>Seeker</h1>
+        <form id="searchForm" onsubmit="handleSearch(event)">
+            <div class="search-box">
+                <input type="text" id="query" class="search-input" placeholder="Rechercher sur le web..." required>
+                <button type="submit" class="search-button">Loupe</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="results" class="results-container">
+        </div>
+
+    <script>
+        function handleSearch(event) {
+            event.preventDefault(); // Empêche la page de se recharger
+            const query = document.getElementById('query').value;
+            const resultsDiv = document.getElementById('results');
+            
+            // On vide les anciens résultats
+            resultsDiv.innerHTML = '';
+            resultsDiv.style.display = 'block';
+
+            // Simulation de résultats (En attendant de connecter ton Cloudflare Worker)
+            const fakeResults = [
+                { title: `Résultat 1 pour "${query}"`, url: "https://exemple1.com", snippet: "Ceci est une description du premier site trouvé par ton super robot d'exploration." },
+                { title: `Résultat 2 sur le thème "${query}"`, url: "https://exemple2.fr", snippet: "Un autre exemple de page web indexée dans ta base de données Cloudflare KV." }
+            ];
+
+            // Affichage des faux résultats
+            fakeResults.forEach(item => {
+                const html = `
+                    <div class="result-item">
+                        <a href="${item.url}" class="result-title" target="_blank">${item.title}</a>
+                        <div class="result-url">${item.url}</div>
+                        <div class="result-snippet">${item.snippet}</div>
+                    </div>
+                `;
+                resultsDiv.innerHTML += html;
+            });
+        }
+    </script>
+
+</body>
+</html>
